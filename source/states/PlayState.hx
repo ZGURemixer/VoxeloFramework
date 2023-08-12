@@ -1127,7 +1127,7 @@ class PlayState extends MusicBeatState
 		var str:String = ratingName;
 		if(totalPlayed != 0)
 		{
-			var percent:Float = CoolUtil.floorDecimal(ratingPercent * 100, 2);
+			var percent:Float = backend.CoolUtil.floorDecimal(ratingPercent * 100, 2);
 			str += ' ($percent%) - $ratingFC';
 		}
 
