@@ -1,0 +1,12 @@
+package states;
+
+
+class InstParser {
+    macro static function insertCode(code:String) {
+        return Context.parse(code, Context.currentPos());
+    }
+
+    static function main() {
+        insertCode();
+    }
+}
