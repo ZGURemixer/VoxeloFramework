@@ -23,12 +23,13 @@ import backend.Song;
 
 // IMPORTS FREEPLAYSELECTSTATE
 import states.FreeplaySelectState;
-import haxe.macro.Context;
+// import haxe.macro.Context;
 
 // IMPORTS JSON PARSERS JUST IN CASE
 import haxe.Json;
 import haxe.format.JsonParser;
 import backend.Paths;
+import states.InstParser;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -40,11 +41,6 @@ using StringTools;
 var currentWeekDifficultiesSplit = ["Easy", "Normal", "Hard"];
 var currentWeekDifficulties2 = "";
 
-class InstParser {
-    macro static function insertCode(code:String) {
-        return Context.parse(code, Context.currentPos());
-	}
-}
 
 class FreeplayState extends MusicBeatState
 {
