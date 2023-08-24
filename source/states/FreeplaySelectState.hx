@@ -30,7 +30,7 @@ var packList:Array<String> = [];
 class FreeplaySelectState extends MusicBeatState{
 
     // CHANGES THE INITIAL PACK LIST'S VALUES
-    var packList = JsonParser.parse(Paths.getTextFromFile("data/packlist.json"));
+    public var packList = JsonParser.parse(Paths.getTextFromFile("data/packlist.json"));
 
     // THIS VARIABLE FIXES THE DIFFICULTY GLITCH
     public var currentWeekDifficultiesAlt = ["Easy", "Normal", "Hard"];

@@ -23,6 +23,12 @@ import backend.Song;
 
 // IMPORTS FREEPLAYSELECTSTATE
 import states.FreeplaySelectState;
+import haxe.macro.Context;
+
+// IMPORTS JSON PARSERS JUST IN CASE
+import haxe.Json;
+import haxe.format.JsonParser;
+import backend.Paths;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -33,6 +39,12 @@ using StringTools;
 // THESE VARS FIX THE DIFFICULTIES BUG
 var currentWeekDifficultiesSplit = ["Easy", "Normal", "Hard"];
 var currentWeekDifficulties2 = "";
+
+class InstParser {
+    macro static function insertCode(code:String) {
+        return Context.parse(code, Context.currentPos());
+	}
+}
 
 class FreeplayState extends MusicBeatState
 {
@@ -60,11 +72,16 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
-	// THIS VAR PREVENTS A CRASH
-	private var theNumberOne:Int = 1;
+	public var packList = JsonParser.parse(Paths.getTextFromFile("data/packlist.json"));
 
+	// THESE VARS PREVENT CRASHES
+	public var selPack:String = "tutorial";
+	public var selPackString:String = "packList.packs.tutorial.songs";
 	override function create()
 	{
+		selPack = FreeplaySelectState.selectedPack;
+		selPackString = "packList.packs." + selPack + ".songs";
+		trace(selPackString);
 
 		curDifficulty = -1;
 		
@@ -81,7 +98,7 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		// for (i in 0...WeekData.weeksList.length) {
-		for (i in 0...theNumberOne) {
+		// for (i in 0...theNumberOne) {
 			// if(weekIsLocked(WeekData.weeksList[i])) continue;
 
 			var leWeek:WeekData = WeekData.weeksLoaded.get(FreeplaySelectState.selectedPack);
@@ -102,9 +119,10 @@ class FreeplayState extends MusicBeatState
 				{
 					colors = [146, 113, 253];
 				}
-				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+				// addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+				addSong(song[0], 1, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
 			}
-		}
+		// }
 		backend.WeekData.loadTheFirstEnabledMod();
 
 		/*		//KIND OF BROKEN NOW AND ALSO PRETTY USELESS//
@@ -231,7 +249,7 @@ class FreeplayState extends MusicBeatState
 			backend.CoolUtil.difficulties = ["Easy", "Normal", "Hard"];
 		};
 		
-		trace(currentWeekDifficultiesSplit);
+		// trace(currentWeekDifficultiesSplit);
 
 		var firstDiffUppercase = currentWeekDifficultiesSplit[0].toUpperCase();
 
@@ -396,6 +414,7 @@ class FreeplayState extends MusicBeatState
 		{
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
+			// var poop:String = "fresh-hard";
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED
 			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
@@ -463,6 +482,9 @@ class FreeplayState extends MusicBeatState
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + backend.CoolUtil.difficultyString() + ' >';
 		positionHighscore();
+
+		// trace("The current difficulty selected is:");
+		// trace(curSelected);
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
