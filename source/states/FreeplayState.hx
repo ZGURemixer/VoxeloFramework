@@ -73,11 +73,12 @@ class FreeplayState extends MusicBeatState
 	// THESE VARS PREVENT CRASHES
 	public var selPack:String = "tutorial";
 	public var selPackString:String = "packList.packs.tutorial.songs";
+	public var codeToExecute:String = "trace(selPackString)";
 	override function create()
 	{
 		selPack = FreeplaySelectState.selectedPack;
 		selPackString = "packList.packs." + selPack + ".songs";
-		trace(selPackString);
+		ParseInst.insertCode("trace('hello, world!')");
 
 		curDifficulty = -1;
 		

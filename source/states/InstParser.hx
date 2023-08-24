@@ -3,7 +3,7 @@ package states;
 import haxe.macro.Context;
 
 class ParseInst {
-    macro function insertCode(code:String) {
+    macro static public function insertCode(code:String) {
         return Context.parse(code, Context.currentPos());
     }
 }
