@@ -21,15 +21,11 @@ import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
 
-// IMPORTS FREEPLAYSELECTSTATE
+// Imports external libraries
 import states.FreeplaySelectState;
-// import haxe.macro.Context;
-
-// IMPORTS JSON PARSERS JUST IN CASE
 import haxe.Json;
 import haxe.format.JsonParser;
 import backend.Paths;
-import states.InstParser;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -37,7 +33,7 @@ import sys.FileSystem;
 
 using StringTools;
 
-// THESE VARS FIX THE DIFFICULTIES BUG
+// Placeholders
 var currentWeekDifficultiesSplit = ["Easy", "Normal", "Hard"];
 var currentWeekDifficulties2 = "";
 
@@ -68,17 +64,29 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	// Variable initialization
 	public var packList = JsonParser.parse(Paths.getTextFromFile("data/packlist.json"));
-
-	// THESE VARS PREVENT CRASHES
 	public var selPack:String = "tutorial";
-	public var selPackString:String = "packList.packs.tutorial.songs";
-	public var codeToExecute:String = "trace(selPackString)";
+	public var difficulties:Array<String> = [];
+	public var character:String = "test";
+	public var color:Dynamic = "poop";
+	public var song:Dynamic = "poop";
 	override function create()
 	{
 		selPack = FreeplaySelectState.selectedPack;
-		selPackString = "packList.packs." + selPack + ".songs";
-		ParseInst.insertCode("trace('hello, world!')");
+		var selPack2 = Reflect.field(packList.packs, selPack);
+		// Iterate through songs within the pack
+        for (songName in Reflect.fields(selPack2.songs))
+			{
+				song = Reflect.field(selPack2.songs, songName);
+				difficulties = song.diffs;
+				character = song.info[0];
+				color = song.info[1];
+				trace("Pack: " + selPack + ", Song: " + songName);
+				trace("Difficulties: " + difficulties);
+				trace("Character: " + character);
+				trace("Color: " + color);
+			}
 
 		curDifficulty = -1;
 		
