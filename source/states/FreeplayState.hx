@@ -67,26 +67,41 @@ class FreeplayState extends MusicBeatState
 	// Variable initialization
 	public var packList = JsonParser.parse(Paths.getTextFromFile("data/packlist.json"));
 	public var selPack:String = "tutorial";
-	public var difficulties:Array<String> = [];
-	public var character:String = "test";
-	public var color:Dynamic = "poop";
-	public var song:Dynamic = "poop";
+	public var seldifficulties:Array<String> = [];
+	public var selcharacter:String = "test";
+	public var selcolor:Dynamic = "poop";
+	public var selsong:Dynamic = "poop";
+
+	// Array initialization
+	public var packdiffs:Array<Array<String>> = [];
+	public var packchars:Array<String> = [];
+	public var packcolors:Array<Dynamic> = [];
+	public var packsongs:Array<String> = [];
+
 	override function create()
 	{
 		selPack = FreeplaySelectState.selectedPack;
 		var selPack2 = Reflect.field(packList.packs, selPack);
-		// Iterate through songs within the pack
+		// Iterate through data within the pack
+
         for (songName in Reflect.fields(selPack2.songs))
 			{
-				song = Reflect.field(selPack2.songs, songName);
-				difficulties = song.diffs;
-				character = song.info[0];
-				color = song.info[1];
-				trace("Pack: " + selPack + ", Song: " + songName);
-				trace("Difficulties: " + difficulties);
-				trace("Character: " + character);
-				trace("Color: " + color);
+				selsong = Reflect.field(selPack2.songs, songName);
+				seldifficulties = selsong.diffs;
+				selcharacter = selsong.info[0];
+				selcolor = selsong.info[1];
+
+				// Pushing the data into the array
+				packsongs.push(songName);
+				packdiffs.push(seldifficulties);
+				packchars.push(selcharacter);
+				packcolors.push(selcolor);
 			}
+
+		// trace(packsongs);
+		trace(packdiffs);
+		// trace(packchars);
+		// trace(packcolors);
 
 		curDifficulty = -1;
 		
@@ -110,22 +125,29 @@ class FreeplayState extends MusicBeatState
 			var leSongs:Array<String> = [];
 			var leChars:Array<String> = [];
 
-			for (j in 0...leWeek.songs.length)
+			// for (j in 0...leWeek.songs.length)
+			
+			var sp2songs:Array<Dynamic> = Reflect.fields(selPack2.songs);
+			for (j in 0...Reflect.fields(selPack2.songs).length)
 			{
-				leSongs.push(leWeek.songs[j][0]);
-				leChars.push(leWeek.songs[j][1]);
+				// leSongs.push(leWeek.songs[j][0]);
+				// leChars.push(leWeek.songs[j][1]);
+				leSongs.push(packsongs[j]);
 			}
 
+			// trace(leSongs);
+
 			WeekData.setDirectoryFromWeek(leWeek);
-			for (song in leWeek.songs)
+			for (csgo in 0...packsongs.length)
 			{
-				var colors:Array<Int> = song[2];
+				var colors:Array<Int> = packcolors[csgo];
+				// var colors:Array<Int> = song[2];
 				if(colors == null || colors.length < 3)
 				{
 					colors = [146, 113, 253];
 				}
 				// addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
-				addSong(song[0], 1, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+				addSong(packsongs[csgo], 1, packchars[csgo], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
 			}
 		// }
 		backend.WeekData.loadTheFirstEnabledMod();
@@ -238,8 +260,10 @@ class FreeplayState extends MusicBeatState
 		text.scrollFactor.set();
 		add(text);
 		
+		currentWeekDifficultiesSplit = packdiffs[0];
+		backend.CoolUtil.difficulties = currentWeekDifficultiesSplit;
 		// THIS FIXES THE DIFFICULTY BUG
-		var currentWeekData = WeekData.weeksLoaded.get(FreeplaySelectState.selectedPack);
+/* 		var currentWeekData = WeekData.weeksLoaded.get(FreeplaySelectState.selectedPack);
 		var currentWeekDifficulties = currentWeekData.difficulties;
 
 
@@ -254,7 +278,7 @@ class FreeplayState extends MusicBeatState
 			backend.CoolUtil.difficulties = ["Easy", "Normal", "Hard"];
 		};
 		
-		// trace(currentWeekDifficultiesSplit);
+		// trace(currentWeekDifficultiesSplit); */
 
 		var firstDiffUppercase = currentWeekDifficultiesSplit[0].toUpperCase();
 
@@ -421,7 +445,7 @@ class FreeplayState extends MusicBeatState
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			// var poop:String = "fresh-hard";
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
-			/*#if MODS_ALLOWED
+			#if MODS_ALLOWED
 			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
 			#else
 			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
@@ -429,7 +453,7 @@ class FreeplayState extends MusicBeatState
 				poop = songLowercase;
 				curDifficulty = 1;
 				trace('Couldnt find file');
-			}*/
+			}
 			trace(poop);
 
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
@@ -550,17 +574,18 @@ class FreeplayState extends MusicBeatState
 		Mods.currentModDirectory = songs[curSelected].folder;
 		PlayState.storyWeek = songs[curSelected].week;
 
-		backend.CoolUtil.difficulties = currentWeekDifficultiesSplit;
+		// backend.CoolUtil.difficulties = currentWeekDifficultiesSplit;
 		// var diffStr:String = WeekData.getCurrentWeek().difficulties;
 
-		currentWeekDifficulties2 = WeekData.weeksLoaded.get(FreeplaySelectState.selectedPack).difficulties;
+		// currentWeekDifficulties2 = WeekData.weeksLoaded.get(FreeplaySelectState.selectedPack).difficulties;
 
-		var diffStr:String = currentWeekDifficulties2;
+/* 		var diffStr:String = currentWeekDifficulties2;
 		if(diffStr != null) diffStr = diffStr.trim(); //Fuck you HTML5
 
 		if(diffStr != null && diffStr.length > 0)
 		{
-			var diffs:Array<String> = diffStr.split(',');
+			//var diffs:Array<String> = diffStr.split(',');
+			var diffs:Array<String> = packdiffs[1];
 			var i:Int = diffs.length - 1;
 			while (i > 0)
 			{
@@ -576,7 +601,7 @@ class FreeplayState extends MusicBeatState
 			{
 				backend.CoolUtil.difficulties = currentWeekDifficultiesSplit;
 			}
-		}
+		} */
 		
 		if(backend.CoolUtil.difficulties.contains(backend.CoolUtil.defaultDifficulty))
 		{

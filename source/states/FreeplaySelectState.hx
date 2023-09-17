@@ -33,7 +33,7 @@ class FreeplaySelectState extends MusicBeatState{
     public var packList = JsonParser.parse(Paths.getTextFromFile("data/packlist.json"));
 
     // THIS VARIABLE FIXES THE DIFFICULTY GLITCH
-    public var currentWeekDifficultiesAlt = ["Easy", "Normal", "Hard"];
+    // public var currentWeekDifficultiesAlt = ["Easy", "Normal", "Hard"];
 
     public static var curCategory:Int = 0;
 
@@ -207,7 +207,7 @@ class FreeplaySelectState extends MusicBeatState{
         // } else {
         //     currentWeekDifficultiesAlt = ["Easy", "Normal", "Hard"];
         // };
-        trace(currentWeekDifficultiesAlt);
+        // trace(currentWeekDifficultiesAlt);
     }
 
 }
