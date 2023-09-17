@@ -47,13 +47,13 @@ class FreeplayState extends MusicBeatState
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
 
-	var scoreBG:FlxSprite;
-	var scoreText:FlxText;
-	var diffText:FlxText;
-	var lerpScore:Int = 0;
-	var lerpRating:Float = 0;
-	var intendedScore:Int = 0;
-	var intendedRating:Float = 0;
+	// var scoreBG:FlxSprite;
+	// var scoreText:FlxText;
+	// var diffText:FlxText;
+	// var lerpScore:Int = 0;
+	// var lerpRating:Float = 0;
+	// var intendedScore:Int = 0;
+	// var intendedRating:Float = 0;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -199,31 +199,32 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.setDirectoryFromWeek();
 
-		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
-		scoreText.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, RIGHT);
+		// scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
+		// scoreText.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, RIGHT);
 
-		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
-		scoreBG.alpha = 0.6;
-		add(scoreBG);
+		// scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
+		// scoreBG = new FlxSprite((FlxG.width * 0.7) - 6, 0).makeGraphic(1, 66, 0xFF000000);
+		// scoreBG.alpha = 0.6;
+		// add(scoreBG);
 
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
-		diffText.font = scoreText.font;
-		add(diffText);
+		// diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+		// diffText.font = scoreText.font;
+		// add(diffText);
 
-		add(scoreText);
+		// add(scoreText);
 
 		if(curSelected >= songs.length) curSelected = 0;
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
 
-		if(lastDifficultyName == '')
+		/* if(lastDifficultyName == '')
 		{
 			lastDifficultyName = backend.CoolUtil.defaultDifficulty;
 		}
-		curDifficulty = Math.round(Math.max(0, backend.CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
+		curDifficulty = Math.round(Math.max(0, backend.CoolUtil.defaultDifficulties.indexOf(lastDifficultyName))); */
 		
 		changeSelection();
-		changeDiff();
+		// // changeDiff();
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
@@ -280,9 +281,9 @@ class FreeplayState extends MusicBeatState
 		
 		// trace(currentWeekDifficultiesSplit); */
 
-		var firstDiffUppercase = currentWeekDifficultiesSplit[0].toUpperCase();
+		// var firstDiffUppercase = currentWeekDifficultiesSplit[0].toUpperCase();
 
-		diffText.text = '< ' + firstDiffUppercase + ' >';
+		// diffText.text = '< ' + firstDiffUppercase + ' >';
 
 		super.create();
 	}
@@ -329,7 +330,7 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
-		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, backend.CoolUtil.boundTo(elapsed * 24, 0, 1)));
+		/* lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, backend.CoolUtil.boundTo(elapsed * 24, 0, 1)));
 		lerpRating = FlxMath.lerp(lerpRating, intendedRating, backend.CoolUtil.boundTo(elapsed * 12, 0, 1));
 
 		if (Math.abs(lerpScore - intendedScore) <= 10)
@@ -344,10 +345,10 @@ class FreeplayState extends MusicBeatState
 		
 		while(ratingSplit[1].length < 2) { //Less than 2 decimals in it, add decimals then
 			ratingSplit[1] += '0';
-		}
+		} */
 
-		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
-		positionHighscore();
+		// scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
+		// positionHighscore();
 
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
@@ -380,7 +381,7 @@ class FreeplayState extends MusicBeatState
 				if(holdTime > 0.5 && checkNewHold - checkLastHold > 0)
 				{
 					changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult));
-					changeDiff();
+					// changeDiff();
 				}
 			}
 
@@ -388,15 +389,15 @@ class FreeplayState extends MusicBeatState
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
 				changeSelection(-shiftMult * FlxG.mouse.wheel, false);
-				changeDiff();
+				// changeDiff();
 			}
 		}
 
-		if (controls.UI_LEFT_P)
-			changeDiff(-1);
+		/* if (controls.UI_LEFT_P)
+			// changeDiff(-1);
 		else if (controls.UI_RIGHT_P)
-			changeDiff(1);
-		else if (upP || downP) changeDiff();
+			// changeDiff(1);
+		else if (upP || downP) // changeDiff(); */
 
 		if (controls.BACK)
 		{
@@ -444,21 +445,25 @@ class FreeplayState extends MusicBeatState
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			// var poop:String = "fresh-hard";
-			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			//var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			var poop:String = songLowercase;
+			curDifficulty = 1;
+			trace(poop);
 			#if MODS_ALLOWED
 			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
 			#else
 			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
 			#end
-				poop = songLowercase;
-				curDifficulty = 1;
-				trace('Couldnt find file');
+				// poop = songLowercase;
+				// curDifficulty = 1;
+				// trace('Couldnt find file');
 			}
-			trace(poop);
+			// trace(poop);
 
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
+			// PlayState.storyDifficulty = curDifficulty;
+			PlayState.storyDifficulty = 1;
 
 			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
 			if(colorTween != null) {
@@ -492,7 +497,7 @@ class FreeplayState extends MusicBeatState
 		vocals = null;
 	}
 
-	function changeDiff(change:Int = 0)
+	/* function changeDiff(change:Int = 0)
 	{
 		curDifficulty += change;
 
@@ -510,11 +515,11 @@ class FreeplayState extends MusicBeatState
 
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + backend.CoolUtil.difficultyString() + ' >';
-		positionHighscore();
+		// positionHighscore();
 
 		// trace("The current difficulty selected is:");
 		// trace(curSelected);
-	}
+	} */
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
@@ -543,8 +548,8 @@ class FreeplayState extends MusicBeatState
 		// selector.y = (70 * curSelected) + 30;
 
 		#if !switch
-		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
-		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
+		// intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		// intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 		#end
 
 		var bullShit:Int = 0;
@@ -603,31 +608,31 @@ class FreeplayState extends MusicBeatState
 			}
 		} */
 		
-		if(backend.CoolUtil.difficulties.contains(backend.CoolUtil.defaultDifficulty))
-		{
-			curDifficulty = Math.round(Math.max(0, currentWeekDifficultiesSplit.indexOf(backend.CoolUtil.defaultDifficulty)));
-		}
-		else
-		{
-			curDifficulty = 0;
-		}
+		// if(backend.CoolUtil.difficulties.contains(backend.CoolUtil.defaultDifficulty))
+		// {
+		// 	curDifficulty = Math.round(Math.max(0, currentWeekDifficultiesSplit.indexOf(backend.CoolUtil.defaultDifficulty)));
+		// }
+		// else
+		// {
+		// 	curDifficulty = 0;
+		// }
 
-		var newPos:Int = currentWeekDifficultiesSplit.indexOf(lastDifficultyName);
-		//trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
-		if(newPos > -1)
-		{
-			curDifficulty = newPos;
-		}
+		// var newPos:Int = currentWeekDifficultiesSplit.indexOf(lastDifficultyName);
+		// //trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
+		// if(newPos > -1)
+		// {
+		// 	curDifficulty = newPos;
+		// }
 	}
 
-	private function positionHighscore() {
+	/* private function positionHighscore() {
 		scoreText.x = FlxG.width - scoreText.width - 6;
 
 		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
 		scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
 		diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
 		diffText.x -= diffText.width / 2;
-	}
+	} */
 }
 
 class SongMetadata
