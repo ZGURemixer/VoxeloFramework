@@ -174,7 +174,10 @@ class FreeplayState extends MusicBeatState
 		for (i in 0...songs.length)
 		{
 			var songText:Alphabet = new Alphabet(90, 320, songs[i].songName, true);
+			// Taken from Mic'd Up
 			songText.isMenuItem = true;
+			songText.isCustomMenuItem = true;
+			songText.itemType = "D-Shape";
 			songText.targetY = i - curSelected;
 			grpSongs.add(songText);
 

@@ -584,13 +584,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
 				case 6:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Not associated', 'with'], -40);
-					#else
-					createCoolText(['In association', 'with'], -40);
-					#end
+					// #if PSYCH_WATERMARKS
+					createCoolText(['Voxelo Framework', 'by'], -40);
+					// #else
+					// createCoolText(['In association', 'with'], -40);
+					// #end
 				case 8:
-					addMoreText('newgrounds', -40);
+					addMoreText('ZGURemixer', -40);
 					ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
 				case 9:

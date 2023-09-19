@@ -20,6 +20,10 @@ class Alphabet extends FlxSpriteGroup
 	public var targetY:Int = 0;
 	public var changeX:Bool = true;
 	public var changeY:Bool = true;
+	// Taken from Mic'd Up
+	public var targetX:Float = 0;
+	public var itemType:String = "Classic";
+	public var isCustomMenuItem:Bool = false;
 
 	public var alignment(default, set):Alignment = LEFT;
 	public var scaleX(default, set):Float = 1;
@@ -170,6 +174,40 @@ class Alphabet extends FlxSpriteGroup
 				x = FlxMath.lerp(x, (targetY * distancePerItem.x) + startPosition.x, lerpVal);
 			if(changeY)
 				y = FlxMath.lerp(y, (targetY * 1.3 * distancePerItem.y) + startPosition.y, lerpVal);
+		}
+		if (isCustomMenuItem) {
+			// Taken from Mic'd Up
+			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+			switch (itemType)
+			{
+				case "Classic":
+					y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16/(1));
+					x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16/(1));
+	
+				case "Vertical":
+					y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.5), 0.16/(1));
+					x = FlxMath.lerp(x, (targetY * 0) + 308, 0.16/(1));
+					x += targetX/(1);
+				
+				case "C-Shape":
+					y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), 0.16/(1));
+	
+					x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * 70 + (FlxG.width * 0.1), 0.16/(1));
+					if (scaledY < 0)
+						x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * 70 + (FlxG.width * 0.1), 0.16/(1));
+	
+					if (x > FlxG.width + 30)
+						x = FlxG.width + 30;
+				case "D-Shape":
+					y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), 0.16/(1));
+		
+					x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * -70 + (FlxG.width * 0.35), 0.16/(1));
+					if (scaledY < 0)
+						x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * -70 + (FlxG.width * 0.35), 0.16/(1));
+		
+					if (x < -900)
+						x = -900;
+			}
 		}
 		super.update(elapsed);
 	}
