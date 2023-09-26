@@ -1,47 +1,13 @@
 {
     "packs": {
-      "week1": {
+      "tutorial": {
         "songs": {
           "tutorial": {
             "diffs": [
-              "Easy",
-              "Medium",
-              "Hard"
+              "Normal"
             ],
             "info": [
               "gf",
-              [
-                165,
-                0,
-                77
-              ]
-            ]
-          },
-          "bopeebo": {
-            "diffs": [
-              "Easy",
-              "Medium",
-              "Hard"
-            ],
-            "info": [
-              "gf",
-              [
-                165,
-                0,
-                77
-              ]
-            ]
-          }
-        }
-      },
-      "week2": {
-        "songs": {
-          "rotario": {
-            "diffs": [
-              "Erect"
-            ],
-            "info": [
-              "dad",
               [
                 165,
                 0,

@@ -17,7 +17,9 @@ class HealthBar extends FlxSpriteGroup
 	// you might need to change this if you want to use a custom bar
 	public var barWidth(default, set):Int = 1;
 	public var barHeight(default, set):Int = 1;
-	public var barOffset:FlxPoint = new FlxPoint(3, 3);
+	public var rogersOffset:Int = 3;
+	// public var barOffset:FlxPoint = new FlxPoint(3, 3);
+	public var barOffset:FlxPoint = new FlxPoint(5, 3);
 
 	public function new(x:Float, y:Float, image:String = 'healthBar', valueFunction:Void->Float = null, boundX:Float = 0, boundY:Float = 1)
 	{
@@ -28,7 +30,7 @@ class HealthBar extends FlxSpriteGroup
 		
 		bg = new FlxSprite().loadGraphic(Paths.image(image));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
-		barWidth = Std.int(bg.width - 7);
+		barWidth = Std.int(bg.width - (rogersOffset + 6));
 		barHeight = Std.int(bg.height - 6);
 
 		leftBar = new FlxSprite().makeGraphic(Std.int(bg.width), Std.int(bg.height), FlxColor.WHITE);
