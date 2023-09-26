@@ -172,7 +172,7 @@ class ClientPrefs {
 
 		//Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v3', CoolUtil.getSavePath());
+		save.bind('controls_v3', backend.CoolUtil.getSavePath());
 		save.data.keyboard = keyBinds;
 		save.data.gamepad = gamepadBinds;
 		save.flush();
@@ -224,7 +224,7 @@ class ClientPrefs {
 
 		// controls on a separate save file
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v3', CoolUtil.getSavePath());
+		save.bind('controls_v3', backend.CoolUtil.getSavePath());
 		if(save != null)
 		{
 			if(save.data.keyboard != null) {

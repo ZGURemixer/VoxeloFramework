@@ -10,7 +10,7 @@ class TextFunctions
 			tag = tag.replace('.', '');
 			LuaUtils.resetTextTag(tag);
 			var leText:FlxText = new FlxText(x, y, width, text, 16);
-			leText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			leText.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			leText.cameras = [game.camHUD];
 			leText.scrollFactor.set();
 			leText.borderSize = 2;
@@ -58,7 +58,7 @@ class TextFunctions
 				}
 				else
 					obj.borderStyle = NONE;
-				obj.borderColor = CoolUtil.colorFromString(color);
+				obj.borderColor = backend.CoolUtil.colorFromString(color);
 				return true;
 			}
 			FunkinLua.luaTrace("setTextBorder: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
@@ -68,7 +68,7 @@ class TextFunctions
 			var obj:FlxText = LuaUtils.getTextObject(tag);
 			if(obj != null)
 			{
-				obj.color = CoolUtil.colorFromString(color);
+				obj.color = backend.CoolUtil.colorFromString(color);
 				return true;
 			}
 			FunkinLua.luaTrace("setTextColor: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);

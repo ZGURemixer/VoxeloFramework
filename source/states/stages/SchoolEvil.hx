@@ -100,7 +100,7 @@ class SchoolEvil extends BaseStage
 			return;
 		}
 
-		doof = new DialogueBox(false, CoolUtil.coolTextFile(file));
+		doof = new DialogueBox(false, backend.CoolUtil.coolTextFile(file));
 		doof.cameras = [camHUD];
 		doof.scrollFactor.set();
 		doof.finishThing = startCountdown;

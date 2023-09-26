@@ -117,7 +117,7 @@ class CharacterEditorState extends MusicBeatState
 		dumbTexts.cameras = [camHUD];
 
 		textAnim = new FlxText(300, 16);
-		textAnim.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		textAnim.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		textAnim.borderSize = 1;
 		textAnim.size = 32;
 		textAnim.scrollFactor.set();
@@ -509,7 +509,7 @@ class CharacterEditorState extends MusicBeatState
 
 		var decideIconColor:FlxButton = new FlxButton(reloadImage.x, reloadImage.y + 30, "Get Icon Color", function()
 			{
-				var coolColor = FlxColor.fromInt(CoolUtil.dominantColor(leHealthIcon));
+				var coolColor = FlxColor.fromInt(backend.CoolUtil.dominantColor(leHealthIcon));
 				healthColorStepperR.value = coolColor.red;
 				healthColorStepperG.value = coolColor.green;
 				healthColorStepperB.value = coolColor.blue;
@@ -1042,7 +1042,7 @@ class CharacterEditorState extends MusicBeatState
 			}
 		}
 		#else
-		characterList = CoolUtil.coolTextFile(Paths.txt('characterList'));
+		characterList = backend.CoolUtil.coolTextFile(Paths.txt('characterList'));
 		#end
 
 		charDropDown.setData(FlxUIDropDownMenu.makeStrIdLabelArray(characterList, true));

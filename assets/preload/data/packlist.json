@@ -1,0 +1,21 @@
+{
+    "packs": {
+      "tutorial": {
+        "songs": {
+          "tutorial": {
+            "diffs": [
+              "Normal"
+            ],
+            "info": [
+              "gf",
+              [
+                165,
+                0,
+                77
+              ]
+            ]
+          }
+        }
+      }
+    }
+}

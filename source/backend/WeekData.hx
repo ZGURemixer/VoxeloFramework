@@ -97,7 +97,7 @@ class WeekData {
 		var originalLength:Int = directories.length;
 		#end
 
-		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getPreloadPath('weeks/weekList.txt'));
+		var sexList:Array<String> = backend.CoolUtil.coolTextFile(Paths.getPreloadPath('weeks/weekList.txt'));
 		for (i in 0...sexList.length) {
 			for (j in 0...directories.length) {
 				var fileToCheck:String = directories[j] + 'weeks/' + sexList[i] + '.json';
@@ -125,7 +125,7 @@ class WeekData {
 		for (i in 0...directories.length) {
 			var directory:String = directories[i] + 'weeks/';
 			if(FileSystem.exists(directory)) {
-				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directory + 'weekList.txt');
+				var listOfWeeks:Array<String> = backend.CoolUtil.coolTextFile(directory + 'weekList.txt');
 				for (daWeek in listOfWeeks)
 				{
 					var path:String = directory + daWeek + '.json';
@@ -207,4 +207,26 @@ class WeekData {
 			Mods.currentModDirectory = data.folder;
 		}
 	}
+
+	public static function loadTheFirstEnabledMod()
+		{
+			Mods.currentModDirectory = '';
+			
+			#if MODS_ALLOWED
+			if (FileSystem.exists("modsList.txt"))
+			{
+				var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
+				var foundTheTop = false;
+				for (i in list)
+				{
+					var dat = i.split("|");
+					if (dat[1] == "1" && !foundTheTop)
+					{
+						foundTheTop = true;
+						Mods.currentModDirectory = dat[0];
+					}
+				}
+			}
+			#end
+		}
 }
