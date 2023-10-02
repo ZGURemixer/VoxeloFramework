@@ -116,7 +116,7 @@ class MainMenuState extends MusicBeatState
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 			// trace(i);
-			// menuItem.x=150+menuItem.x+i*100;
+			menuItem.x=150+menuItem.x+i*100;
 		}
 
 
@@ -292,7 +292,7 @@ class MainMenuState extends MusicBeatState
 				}
 				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y - add);
 
-				spr.centerOffsets();
+				// spr.centerOffsets();
 			}
 		});
 	}
