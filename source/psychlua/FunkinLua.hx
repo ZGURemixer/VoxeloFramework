@@ -1530,7 +1530,7 @@ class FunkinLua {
 		{
 			hscript.active = false;
 			#if (SScript >= "3.0.3")
-			hscript.destroy();
+			hscript.kill();
 			#end
 			hscript = null;
 		}
