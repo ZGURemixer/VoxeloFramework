@@ -115,7 +115,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set(0, scr);
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
-			trace(i);
+			// trace(i);
 			menuItem.x=150+menuItem.x+i*100;
 		}
 
@@ -272,7 +272,7 @@ class MainMenuState extends MusicBeatState
 	function changeItem(huh:Int = 0)
 	{
 		curSelected += huh;
-
+		
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
 		if (curSelected < 0)
@@ -292,7 +292,7 @@ class MainMenuState extends MusicBeatState
 				}
 				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y - add);
 
-				spr.centerOffsets();
+				// spr.centerOffsets();
 			}
 		});
 	}
